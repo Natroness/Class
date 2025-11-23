@@ -78,15 +78,15 @@ string dealing()
         cout<< "We have no cards. Do you want to start it again?\nPress 'Y' or 'y' for Yes.\n" ;
         cin>>play;
 
-        if (play == 'Y' || play =="y" )
+        if (play == 'Y' || play =='y' )
         {
             totalCards();
             shuffle();
-            remaining = 52
+            remaining = 52;
         }
         else
         {
-            r
+            return "";
         }
     }
     remaining -- ;
@@ -117,4 +117,6 @@ int main(){
     cout<<endl;
     cout<<"Remaining Cards :"<<d.getRemaining()<<endl;
     return 0;
+
+    
 }
