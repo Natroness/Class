@@ -22,8 +22,6 @@ class deck
         string cards[52];
         //also declaring the size of the deck after dealing the cards
         int remaining = 52;
-        //I am making this so that user can chose if they want to play again or no
-        char play = 'Y';
     
     public:
     //also array cannot be filled directly like python so we will need a string temporary list and then add it array iteratively.
@@ -51,73 +49,115 @@ class deck
 //Which is something we dont want it to happen
 // for this may be we shuffle meaning randomizing the position of the cards
 //Then we only deal from the end of the array meaning the last cards
-//and then we will save that to again temporary list then we add it to array to make it shuffle again
+//and then we will save that to again temporary string then we change the position of array
 void shuffle()
 {
+    //using string to store card and then move its position  
     string temp;
-
+    //from what i learned in Programming I. this provides current time in sec which is changing constantly
+    //thats why gives differnt sequence everytime.
     srand(time(0));
+    //srand() is with  the starting position of rand() this makes different everytime.
 
-
+    //looping through each remaining cards
     for (int i =0 ; i<remaining;i++)
-    {
+    {   
+        //r should be less than the remaining number
         int r = rand() % remaining;
-        //again saving all the left cards in temp
+        //again saving the card value in temp file
         temp = cards[i];
-        //now 
+        //changing value in card[i] with card[r]
         cards[i]=cards[r];
+        //putting the value in temp to card[r]
         cards[r]=temp;
     }
 }
-
+//declaring the function dealing() which will return card in string value.
+//we want this function to give the card also while reducing the remaining number of cards
+//since remaining is private member only class member can change it so dealing() has to be member of class.
 string dealing()
 {
-
-    if (remaining == 0)
-    {
-        cout<< "We have no cards. Do you want to start it again?\nPress 'Y' or 'y' for Yes.\n" ;
-        cin>>play;
-
-        if (play == 'Y' || play =='y' )
-        {
-            totalCards();
-            shuffle();
-            remaining = 52;
-        }
-        else
-        {
-            return "";
-        }
+    //I want my program to restart if there is no card so instead of ending and dealing last remaining cards 
+    //i want program to return not enough cards
+    if (remaining ==0)
+    {   
+        return "Not enough Cards!";
     }
+    else
+    {
+    //if remaining card is still enough to deal
+    //it decreases by 1
     remaining -- ;
+    //displays the shuffled card at the end of the array
     return cards[remaining];
+    }
 
 }
-
-
+//declaring function
+// i will use this to reset the deck when it get less than the least number of card than can be dealt.
+//returns integer
 int getRemaining()
 {
+    //returns remaining number of cards
     return remaining;
 }
+//resetting deck after it gets  less than the least number of card than can be dealt.
+//this function will just call the member functions totalcard(), change the value of remaining which is a private member.
+//also calls another class function shuffle.
+void resetDeck()
+{
+    //calling totalcards function
+    totalCards();
+    //changing value of number of remaining cards
+    remaining= 52;
+    //calling the shuffle function
+    shuffle();
+}
+
 };
 //end of class
-int main(){
 
+//starting main function
+int main()
+{
+    //declaing char variable to make play again feature.
+    char play ='Y';
+    //creates object d for class deck
     deck d;
+    //callind totalCard function from class deck
     d.totalCards();
-    d.shuffle();
-
-    cout << " Dealing 3 cards: \n";
-
-    for (int i = 0 ; i<3;i++)
+    //while player still wants to play we continue to play and deal the cards
+    while(play == 'Y'||play == 'y')
     {
-        string card = d.dealing();
-        cout<<d.dealing()<<endl;
+        //shuffling the card after every deal
+        //although shuffle only takes place after a game but since its single player
+        //we shuffle it every time
+        d.shuffle();
+        //displaying to the user about the upcoming cards
+        cout << " Dealing 3 cards: \n";
+        //dealing 3 cards 
+        for (int i = 0 ; i<3;i++)
+        {
+            //prints the string returned by dealing() function in deck class
+            cout<<d.dealing()<<endl;
 
+        }
+        cout<<endl;
+        //displays the integar returned by getRemaining function in deck class
+        cout<<"Remaining Cards :"<<d.getRemaining()<<endl;
+
+        //asking user if they want to play again
+        cout <<"Do you want to continue? \n Press 'Y' to start again: ";
+        //taking input from the user
+        cin>> play;
+        cout<<endl;
+        //if remaining card is less than 3. Starting another deck.
+        if (d.getRemaining()<3)
+        {
+            cout<<"Not enough cards for another round. \n Starting another deck."<<endl;
+            //calling resetDeck funciton from deck class.
+            d.resetDeck();  
+        }
     }
-    cout<<endl;
-    cout<<"Remaining Cards :"<<d.getRemaining()<<endl;
-    return 0;
-
-    
+    return 0;    
 }
