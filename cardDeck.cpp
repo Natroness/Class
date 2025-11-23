@@ -32,14 +32,17 @@ class deck
                     "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "JD", "QD", "KD", "AD",
                     "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "10C", "JC", "QC", "KC", "AC",
                     "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "10S", "JS", "QS", "KS", "AS"};
-    void 
+
+    void totalCards()
+    {
         //adding the card in array
         for (int i = 0;i<52;i++)
         {
+
             cards[i] = mainDeck[i];
         } 
         //end of for loop
-
+    }
 
 
 //Now we need a function to shuffle the card
@@ -51,7 +54,7 @@ class deck
 //and then we will save that to again temporary list then we add it to array to make it shuffle again
 void shuffle()
 {
-    string temp[remaining];
+    string temp;
 
     srand(time(0));
 
@@ -60,20 +63,31 @@ void shuffle()
     {
         int r = rand() % remaining;
         //again saving all the left cards in temp
-        temp[i] = cards[i];
+        temp = cards[i];
         //now 
         cards[i]=cards[r];
         cards[r]=temp;
     }
 }
 
-void dealing()
+string dealing()
 {
 
     if (remaining == 0)
     {
-        cout<< "We have no cards. Do you want to start it again?"\n"Press Y for Yes and N for No" \n ;
+        cout<< "We have no cards. Do you want to start it again?\nPress 'Y' or 'y' for Yes.\n" ;
         cin>>play;
+
+        if (play == 'Y' || play =="y" )
+        {
+            totalCards();
+            shuffle();
+            remaining = 52
+        }
+        else
+        {
+            r
+        }
     }
     remaining -- ;
     return cards[remaining];
@@ -88,18 +102,18 @@ int getRemaining()
 };
 //end of class
 int main(){
+
     deck d;
+    d.totalCards();
     d.shuffle();
 
-    cout << " Dealing 3 cards: "\n;
+    cout << " Dealing 3 cards: \n";
 
     for (int i = 0 ; i<3;i++)
     {
-        cout<<d.dealing()\n;
+        cout<<d.dealing()<<endl;
 
     }
-
-
     cout<<endl;
     cout<<"Remaining Cards :"<<d.getRemaining()<<endl;
     return 0;
