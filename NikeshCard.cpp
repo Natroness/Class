@@ -3,7 +3,7 @@
 //This program will have a deck of playing cards. cards can be represented as a
 //It will be  able to shuffle the deck. ( randomize the array when card is delt)
 //It will Remove the card is delt from the "deck"
-#include <iostream>
+
 //I figured out that we would also need a random to randomize the dealing of card.
 //I had learned to make srand() in my Programming I class using cstdlib and ctime so i will use the same method
 #include<cstdlib> //for srand()
